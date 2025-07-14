@@ -58,8 +58,6 @@ app.use((err, req, res, next) => {
   res.status(500).send({ message: "Internal Server Error" });
 });
 
-databaseConnection(() => {
-  app.listen(PORT, () => {
-    console.log(`server running on ${PORT}`);
-  });
+app.listen(PORT, () => {
+  console.log(`server running on ${PORT}`);
 });
