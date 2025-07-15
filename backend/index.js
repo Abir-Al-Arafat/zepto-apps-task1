@@ -5,6 +5,7 @@ const path = require("path");
 
 const databaseConnection = require("./config/database");
 const fontRouter = require("./routes/font.route");
+const fontGroupRouter = require("./routes/fontGroup.route");
 
 const app = express();
 
@@ -36,6 +37,7 @@ const PORT = process.env.PORT || 3005;
 app.use("/public", express.static(path.join(__dirname, "public")));
 
 app.use("/fonts", fontRouter);
+app.use("/fonts/groups", fontGroupRouter);
 
 // ✅ Default Route
 app.get("/", (req, res) => {
