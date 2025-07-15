@@ -74,4 +74,39 @@ const getFonts = (req, res) => {
   }
 };
 
-module.exports = { getFonts, uploadFont };
+const deleteFont = (req, res) => {
+  const fontId = req.params.id;
+
+  let db;
+  try {
+    const dbContent = fs.readFileSync(DATABASE_FILE, "utf-8") || "{}";
+    db = JSON.parse(dbContent);
+  } catch (err) {
+    return res
+      .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
+      .send(failure("Failed to read database.", err.message));
+  }
+
+  const fontIndex = db.fonts.findIndex((f) => f.id === fontId);
+  if (fontIndex === -1) {
+    return res.status(HTTP_STATUS.NOT_FOUND).send(failure("Font not found"));
+  }
+
+  // Remove font file from uploads directory
+  const fontPath = path.join(UPLOADS_DIR, db.fonts[fontIndex].name);
+  try {
+    if (fs.existsSync(fontPath)) {
+      fs.unlinkSync(fontPath);
+    }
+  } catch (err) {
+    // If file deletion fails, continue to remove from db
+    console.error("font deletion failed", err);
+  }
+
+  db.fonts.splice(fontIndex, 1);
+  fs.writeFileSync(DATABASE_FILE, JSON.stringify(db, null, 2));
+
+  return res.status(HTTP_STATUS.OK).send(success("Font deleted successfully"));
+};
+
+module.exports = { getFonts, uploadFont, deleteFont };

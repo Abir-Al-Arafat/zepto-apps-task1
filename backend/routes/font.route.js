@@ -1,9 +1,14 @@
 const express = require("express");
 const routes = express();
 const HTTP_STATUS = require("../constants/statusCodes");
-const { getFonts, uploadFont } = require("../controller/font.controller");
+const {
+  getFonts,
+  uploadFont,
+  deleteFont,
+} = require("../controller/font.controller");
 const { configureFontUpload } = require("../middleware/fileUpload");
 const { success, failure } = require("../utilities/common");
+
 routes.get("/", getFonts);
 
 routes.post(
@@ -21,5 +26,7 @@ routes.post(
   },
   uploadFont
 );
+
+routes.delete("/:id", deleteFont);
 
 module.exports = routes;
