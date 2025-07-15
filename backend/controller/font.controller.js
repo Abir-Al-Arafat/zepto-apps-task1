@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const HTTP_STATUS = require("../constants/statusCodes");
 const { success, failure } = require("../utilities/common");
-
+const { v4: uuidv4 } = require("uuid");
 const UPLOADS_DIR = path.join(
   __dirname,
   "..",
@@ -40,6 +40,7 @@ const uploadFont = (req, res) => {
   // Prevent duplicate entries
   if (!db.fonts.some((f) => f.name === req.file.originalname)) {
     db.fonts.push({
+      id: uuidv4(),
       name: req.file.originalname,
       path: `/uploads/${req.file.originalname}`,
     });
