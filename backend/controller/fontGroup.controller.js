@@ -16,9 +16,17 @@ const DATABASE_FILE = path.join(
   process.env.DATABASE_FILE || "database.json"
 );
 
-const createGroup = (req, res, sendJSON) => {
+const createGroup = (req, res) => {
   try {
-    const { name, fonts } = req.body;
+    let { name, fonts } = req.body;
+    console.log("req.body", req.body);
+    if (typeof fonts === "string") {
+      try {
+        fonts = JSON.parse(fonts);
+      } catch {
+        fonts = [fonts];
+      }
+    }
     if (!name || !Array.isArray(fonts) || fonts.length < 2) {
       return res
         .status(HTTP_STATUS.BAD_REQUEST)
@@ -54,11 +62,12 @@ const createGroup = (req, res, sendJSON) => {
         .status(HTTP_STATUS.CONFLICT)
         .send(failure("A group with the same set of fonts already exists"));
     }
-    db.groups.push({ name, fonts });
+    const id = uuidv4();
+    db.groups.push({ id, name, fonts });
     fs.writeFileSync(DATABASE_FILE, JSON.stringify(db, null, 2));
     return res
       .status(HTTP_STATUS.CREATED)
-      .send(success("Group created successfully"));
+      .send(success("Group created successfully", { id }));
   } catch (err) {
     return res
       .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)

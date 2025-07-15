@@ -1,5 +1,7 @@
 const express = require("express");
 const routes = express();
+const multer = require("multer");
+const upload = multer();
 
 const {
   createGroup,
@@ -8,7 +10,7 @@ const {
 
 routes.get("/", getGroups);
 
-routes.post("/", createGroup);
+routes.post("/", upload.none(), createGroup);
 
 // routes.delete("/:id", deleteFont);
 
