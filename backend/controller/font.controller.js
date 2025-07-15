@@ -77,6 +77,12 @@ const getFonts = (req, res) => {
 const deleteFont = (req, res) => {
   const fontId = req.params.id;
 
+  if (!fontId) {
+    return res
+      .status(HTTP_STATUS.BAD_REQUEST)
+      .send(failure("Font ID required"));
+  }
+
   let db;
   try {
     const dbContent = fs.readFileSync(DATABASE_FILE, "utf-8") || "{}";
