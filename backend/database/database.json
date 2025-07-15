@@ -13,13 +13,14 @@
       "path": "/uploads/Roboto_Condensed-Bold.ttf"
     },
     {
-      "name": "BBC TV Channel Logos.ttf",
-      "path": "/uploads/BBC TV Channel Logos.ttf"
-    },
-    {
-      "id": "44a1d7af-8c9f-4009-a945-558952443dba",
+      "id": "762ff1b2-27a3-4a1f-aea0-a77a63c3f066",
       "name": "CableDingbats.ttf",
       "path": "/uploads/CableDingbats.ttf"
+    },
+    {
+      "id": "112d552b-b998-4850-a9be-ee21719ffa4a",
+      "name": "BBC TV Channel Logos.ttf",
+      "path": "/uploads/BBC TV Channel Logos.ttf"
     }
   ],
   "groups": [
@@ -50,6 +51,14 @@
       "fonts": [
         "Roboto_Condensed-Bold.ttf",
         "Roboto_Condensed-BlackItalic.ttf"
+      ]
+    },
+    {
+      "id": "ad512ee6-56ff-4283-a6ff-763a7f21507f",
+      "name": "new group",
+      "fonts": [
+        "CableDingbats.ttf",
+        "BBC TV Channel Logos.ttf"
       ]
     }
   ]
