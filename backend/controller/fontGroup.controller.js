@@ -94,4 +94,30 @@ const getGroups = (req, res) => {
   }
 };
 
-module.exports = { createGroup, getGroups };
+const deleteGroup = (req, res) => {
+  try {
+    const dbContent = fs.readFileSync(DATABASE_FILE, "utf-8") || "{}";
+    const db = JSON.parse(dbContent);
+    const groupId = req.params.id;
+    if (!groupId) {
+      return res
+        .status(HTTP_STATUS.BAD_REQUEST)
+        .send(failure("Group ID required"));
+    }
+    const groupIndex = db.groups.findIndex((g) => g.id === groupId);
+    if (groupIndex === -1) {
+      return res.status(HTTP_STATUS.NOT_FOUND).send(failure("Group not found"));
+    }
+    db.groups.splice(groupIndex, 1);
+    fs.writeFileSync(DATABASE_FILE, JSON.stringify(db, null, 2));
+    return res
+      .status(HTTP_STATUS.OK)
+      .send(success("Group deleted successfully"));
+  } catch (err) {
+    return res
+      .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
+      .send(failure("Failed to delete group", err.message));
+  }
+};
+
+module.exports = { createGroup, getGroups, deleteGroup };

@@ -3,7 +3,6 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const path = require("path");
 
-const databaseConnection = require("./config/database");
 const fontRouter = require("./routes/font.route");
 const fontGroupRouter = require("./routes/fontGroup.route");
 

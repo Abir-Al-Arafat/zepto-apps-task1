@@ -6,12 +6,13 @@ const upload = multer();
 const {
   createGroup,
   getGroups,
+  deleteGroup,
 } = require("../controller/fontGroup.controller");
 
 routes.get("/", getGroups);
 
 routes.post("/", upload.none(), createGroup);
 
-// routes.delete("/:id", deleteFont);
+routes.delete("/:id", deleteGroup);
 
 module.exports = routes;
