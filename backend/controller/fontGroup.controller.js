@@ -182,4 +182,49 @@ const updateGroup = (req, res) => {
   }
 };
 
-module.exports = { createGroup, updateGroup, getGroups, deleteGroup };
+const deleteFontFromGroup = (req, res) => {
+  try {
+    const dbContent = fs.readFileSync(DATABASE_FILE, "utf-8") || "{}";
+    const db = JSON.parse(dbContent);
+    const fontName = req.body.fontName;
+
+    if (!fontName) {
+      return res
+        .status(HTTP_STATUS.BAD_REQUEST)
+        .send(failure("Font name is required"));
+    }
+
+    let groupsToRemove = [];
+
+    db.groups.forEach((group, index) => {
+      if (group.fonts.includes(fontName)) {
+        group.fonts = group.fonts.filter((font) => font !== fontName);
+        if (group.fonts.length < 2) {
+          groupsToRemove.push(index);
+        }
+      }
+    });
+
+    // Remove groups with less than two fonts
+    for (let i = groupsToRemove.length - 1; i >= 0; i--) {
+      db.groups.splice(groupsToRemove[i], 1);
+    }
+
+    fs.writeFileSync(DATABASE_FILE, JSON.stringify(db, null, 2));
+    return res
+      .status(HTTP_STATUS.OK)
+      .send(success("Font deleted from groups successfully"));
+  } catch (err) {
+    return res
+      .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
+      .send(failure("Failed to delete font from groups", err.message));
+  }
+};
+
+module.exports = {
+  createGroup,
+  updateGroup,
+  getGroups,
+  deleteGroup,
+  deleteFontFromGroup,
+};

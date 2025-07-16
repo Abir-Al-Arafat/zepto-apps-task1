@@ -8,6 +8,7 @@ const {
   updateGroup,
   getGroups,
   deleteGroup,
+  deleteFontFromGroup,
 } = require("../controller/fontGroup.controller");
 
 routes.get("/", getGroups);
@@ -15,6 +16,8 @@ routes.get("/", getGroups);
 routes.post("/", upload.none(), createGroup);
 
 routes.delete("/:id", deleteGroup);
+
+routes.delete("/delete/font", upload.none(), deleteFontFromGroup);
 
 routes.put("/:id", upload.none(), updateGroup);
 
