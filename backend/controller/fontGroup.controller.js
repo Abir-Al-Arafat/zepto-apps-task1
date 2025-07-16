@@ -120,4 +120,66 @@ const deleteGroup = (req, res) => {
   }
 };
 
-module.exports = { createGroup, getGroups, deleteGroup };
+const updateGroup = (req, res) => {
+  try {
+    const dbContent = fs.readFileSync(DATABASE_FILE, "utf-8") || "{}";
+    const db = JSON.parse(dbContent);
+    const groupId = req.params.id;
+    if (!groupId) {
+      return res
+        .status(HTTP_STATUS.BAD_REQUEST)
+        .send(failure("Group ID required"));
+    }
+    const groupIndex = db.groups.findIndex((g) => g.id === groupId);
+    if (groupIndex === -1) {
+      return res.status(HTTP_STATUS.NOT_FOUND).send(failure("Group not found"));
+    }
+    let { name, fonts } = req.body;
+    if (typeof fonts === "string") {
+      try {
+        fonts = JSON.parse(fonts);
+      } catch {
+        fonts = [fonts];
+      }
+    }
+    if (!name || !Array.isArray(fonts) || fonts.length < 2) {
+      return res
+        .status(HTTP_STATUS.BAD_REQUEST)
+        .send(failure("Group name and at least one font is required"));
+    }
+    const allFontNames = db.fonts.map((f) => f.name);
+    const invalidFonts = fonts.filter((f) => !allFontNames.includes(f));
+    if (invalidFonts.length) {
+      return res
+        .status(HTTP_STATUS.BAD_REQUEST)
+        .send(
+          HTTP_STATUS.BAD_REQUEST,
+          failure(`Invalid font names: ${invalidFonts.join(", ")}`)
+        );
+    }
+    // Check for duplicate font sets (regardless of order)
+    const isDuplicateGroup = db.groups.some(
+      (g) =>
+        Array.isArray(g.fonts) &&
+        g.fonts.length === fonts.length &&
+        g.fonts.every((font) => fonts.includes(font)) &&
+        fonts.every((font) => g.fonts.includes(font))
+    );
+    if (isDuplicateGroup) {
+      return res
+        .status(HTTP_STATUS.CONFLICT)
+        .send(failure("A group with the same set of fonts already exists"));
+    }
+    db.groups[groupIndex] = { ...db.groups[groupIndex], name, fonts };
+    fs.writeFileSync(DATABASE_FILE, JSON.stringify(db, null, 2));
+    return res
+      .status(HTTP_STATUS.OK)
+      .send(success("Group updated successfully"));
+  } catch (err) {
+    return res
+      .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
+      .send(failure("Failed to update group", err.message));
+  }
+};
+
+module.exports = { createGroup, updateGroup, getGroups, deleteGroup };
