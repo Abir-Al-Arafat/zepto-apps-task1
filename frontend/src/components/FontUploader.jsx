@@ -1,4 +1,5 @@
 import React from "react";
+import { IoCloudUploadOutline } from "react-icons/io5";
 
 const FontUploader = ({ setFonts }) => {
   const handleUpload = (e) => {
@@ -37,7 +38,7 @@ const FontUploader = ({ setFonts }) => {
       />
       <label htmlFor="font-upload" style={{ cursor: "pointer" }}>
         <div>
-          <i className="bi bi-upload fs-2"></i>
+          <IoCloudUploadOutline className="fs-2" />
           <br />
           <strong>Click to upload</strong> or drag and drop
           <br />
