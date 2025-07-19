@@ -15,8 +15,8 @@ function App() {
   return (
     <>
       <div className="container py-5">
-        <FontUploader setFonts={setFonts} />
-        <FontList fonts={fonts} />
+        <FontUploader />
+        <FontList />
 
         <hr />
 
