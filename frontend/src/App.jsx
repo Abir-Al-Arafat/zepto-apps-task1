@@ -13,8 +13,8 @@ import FontGroupList from "./components/FontGroupList";
 function App() {
   const { fonts, loading, error, uploadFont, deleteFont, refetchFonts } =
     useFonts();
-  // const [fonts, setFonts] = useState([]);
-  const [fontGroups, setFontGroups] = useState([]);
+  // state for FontGroupForm
+  const [editGroup, setEditGroup] = useState(null);
 
   return (
     <>
@@ -29,8 +29,12 @@ function App() {
 
         <hr />
 
-        <FontGroupForm fonts={fonts} setFontGroups={setFontGroups} />
-        <FontGroupList fontGroups={fontGroups} setFontGroups={setFontGroups} />
+        <FontGroupForm
+          fonts={fonts}
+          editGroup={editGroup}
+          setEditGroup={setEditGroup}
+        />
+        <FontGroupList setEditGroup={setEditGroup} />
       </div>
     </>
   );
