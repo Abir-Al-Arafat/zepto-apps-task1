@@ -34,6 +34,7 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 3005;
 
 app.use("/public", express.static(path.join(__dirname, "public")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use("/fonts", fontRouter);
 app.use("/fonts/groups", fontGroupRouter);
