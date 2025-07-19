@@ -29,6 +29,9 @@ const FontUploader = ({ uploadFont, loading, error }) => {
       />
       <label htmlFor="font-upload" style={{ cursor: "pointer" }}>
         <div>
+          <div className="mb-2">
+            <IoCloudUploadOutline size={32} className="d-block mx-auto" />
+          </div>
           <strong>Click to upload</strong> or drag and drop
           <br />
           <small>Only TTF File Allowed</small>
