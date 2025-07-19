@@ -1,33 +1,43 @@
 import React from "react";
+import useFontGroups from "../hooks/useFontGroups";
 
-const FontGroupList = ({ fontGroups, setFontGroups }) => {
-  const handleDelete = (index) => {
-    setFontGroups((prev) => prev.filter((_, i) => i !== index));
-  };
+const FontGroupList = ({ setEditGroup }) => {
+  const { groups, deleteGroup, loading, error } = useFontGroups();
 
   return (
     <div className="mt-5">
       <h5>All Font Groups</h5>
-      {fontGroups.length === 0 ? (
-        <p>No font groups created yet.</p>
+
+      {loading && <p className="text-info">Loading...</p>}
+      {error && <p className="text-danger">{error}</p>}
+
+      {groups.length === 0 ? (
+        <p>No groups yet.</p>
       ) : (
         <ul className="list-group">
-          {fontGroups.map((group, idx) => (
-            <li
-              className="list-group-item d-flex justify-content-between"
-              key={idx}
-            >
-              <div>
-                <strong>{group.title}</strong>
-                <br />
-                <small>{group.fonts.map((f) => f.fontName).join(", ")}</small>
+          {groups.map((group) => (
+            <li className="list-group-item" key={group.id}>
+              <div className="d-flex justify-content-between align-items-center">
+                <div>
+                  <strong>{group.name}</strong>
+                  <br />
+                  <small>{group.fonts.join(", ")}</small>
+                </div>
+                <div>
+                  <button
+                    className="btn btn-sm btn-warning me-2"
+                    onClick={() => setEditGroup(group)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="btn btn-sm btn-danger"
+                    onClick={() => deleteGroup(group.id)}
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
-              <button
-                className="btn btn-danger btn-sm"
-                onClick={() => handleDelete(idx)}
-              >
-                Delete
-              </button>
             </li>
           ))}
         </ul>
