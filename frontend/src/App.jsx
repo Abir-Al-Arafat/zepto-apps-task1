@@ -5,14 +5,20 @@ import "./App.css";
 
 import FontUploader from "./components/FontUploader";
 import FontList from "./components/FontList";
+import FontGroupForm from "./components/FontGroupForm";
 
 function App() {
   const [fonts, setFonts] = useState([]);
+  const [fontGroups, setFontGroups] = useState([]);
 
   return (
     <>
       <FontUploader />
       <FontList fonts={fonts} />
+
+      <hr />
+
+      <FontGroupForm fonts={fonts} setFontGroups={setFontGroups} />
     </>
   );
 }
