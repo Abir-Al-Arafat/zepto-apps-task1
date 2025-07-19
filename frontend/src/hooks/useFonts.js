@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 
-const API_URL = "http://localhost:3005/fonts"; // adjust to your backend
+const API_URL = "http://localhost:3005/fonts";
 
 const useFonts = () => {
   const [fonts, setFonts] = useState([]);
