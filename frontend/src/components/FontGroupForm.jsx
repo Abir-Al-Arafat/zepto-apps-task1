@@ -1,8 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import useFontGroups from "../hooks/useFontGroups";
 
-const FontGroupForm = ({ fonts, setFontGroups }) => {
+const FontGroupForm = ({ fonts, editGroup, setEditGroup }) => {
   const [groupTitle, setGroupTitle] = useState("");
   const [rows, setRows] = useState([{ fontName: "" }]);
+  const { createGroup, updateGroup, loading, error } = useFontGroups();
+
+  // Load edit data into form
+  useEffect(() => {
+    if (editGroup) {
+      setGroupTitle(editGroup.name);
+      setRows(editGroup.fonts.map((font) => ({ fontName: font })));
+    }
+  }, [editGroup]);
 
   const handleAddRow = () => setRows([...rows, { fontName: "" }]);
   const handleRemoveRow = (index) =>
@@ -15,26 +25,43 @@ const FontGroupForm = ({ fonts, setFontGroups }) => {
   };
 
   const handleSubmit = () => {
-    const selected = rows.filter((row) => row.fontName !== "");
-    if (selected.length < 2) return alert("Select at least 2 fonts.");
+    const selectedFonts = rows.map((r) => r.fontName).filter((name) => name);
+    if (selectedFonts.length < 2) return alert("Select at least 2 fonts.");
+    if (!groupTitle.trim()) return alert("Group name required");
 
-    setFontGroups((prev) => [...prev, { title: groupTitle, fonts: selected }]);
+    if (editGroup) {
+      updateGroup({
+        groupId: editGroup.id,
+        name: groupTitle.trim(),
+        fonts: selectedFonts,
+      });
+      setEditGroup(null); // exit edit mode
+    } else {
+      createGroup({ name: groupTitle.trim(), fonts: selectedFonts });
+    }
+
+    setGroupTitle("");
+    setRows([{ fontName: "" }]);
+  };
+
+  const handleCancelEdit = () => {
+    setEditGroup(null);
     setGroupTitle("");
     setRows([{ fontName: "" }]);
   };
 
   return (
-    <div>
-      <h5>Create Font Group</h5>
-      <small className="text-muted">
-        You have to select at least two fonts
-      </small>
+    <div className="mt-4">
+      <h5>{editGroup ? "Edit Font Group" : "Create Font Group"}</h5>
+      <small className="text-muted">You must select at least 2 fonts.</small>
+
       <input
         className="form-control mt-2 mb-3"
         placeholder="Group Title"
         value={groupTitle}
         onChange={(e) => setGroupTitle(e.target.value)}
       />
+
       {rows.map((row, idx) => (
         <div className="row mb-2" key={idx}>
           <div className="col">
@@ -62,13 +89,29 @@ const FontGroupForm = ({ fonts, setFontGroups }) => {
           </div>
         </div>
       ))}
+
       <button className="btn btn-secondary mb-3" onClick={handleAddRow}>
-        + Add Row
+        + Add Font
       </button>
       <br />
-      <button className="btn btn-success" onClick={handleSubmit}>
-        Create
+      <button
+        className="btn btn-success me-2"
+        onClick={handleSubmit}
+        disabled={loading}
+      >
+        {editGroup ? "Update Group" : "Create Group"}
       </button>
+
+      {editGroup && (
+        <button
+          className="btn btn-outline-secondary"
+          onClick={handleCancelEdit}
+        >
+          Cancel Edit
+        </button>
+      )}
+
+      {error && <p className="text-danger mt-2">{error}</p>}
     </div>
   );
 };
