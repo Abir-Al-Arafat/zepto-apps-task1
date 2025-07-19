@@ -5,6 +5,7 @@ const FontList = () => {
   const { fonts, deleteFont, loading, error } = useFonts();
 
   const handleDelete = (id) => {
+    console.log("id", id);
     if (window.confirm("Delete this font?")) {
       deleteFont(id);
     }
@@ -44,7 +45,7 @@ const FontList = () => {
                 <td>
                   <button
                     className="btn btn-sm btn-danger"
-                    onClick={() => handleDelete(font._id)}
+                    onClick={() => handleDelete(font.id)}
                   >
                     Delete
                   </button>
