@@ -14,13 +14,15 @@ function App() {
 
   return (
     <>
-      <FontUploader />
-      <FontList fonts={fonts} />
+      <div className="container py-5">
+        <FontUploader setFonts={setFonts} />
+        <FontList fonts={fonts} />
 
-      <hr />
+        <hr />
 
-      <FontGroupForm fonts={fonts} setFontGroups={setFontGroups} />
-      <FontGroupList fontGroups={fontGroups} setFontGroups={setFontGroups} />
+        <FontGroupForm fonts={fonts} setFontGroups={setFontGroups} />
+        <FontGroupList fontGroups={fontGroups} setFontGroups={setFontGroups} />
+      </div>
     </>
   );
 }

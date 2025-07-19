@@ -1,13 +1,23 @@
 import React from "react";
-import { IoCloudUploadOutline } from "react-icons/io5";
+
 const FontUploader = ({ setFonts }) => {
   const handleUpload = (e) => {
     const file = e.target.files[0];
     if (file && file.name.endsWith(".ttf")) {
-      setFonts((prev) => [
-        ...prev,
-        { name: file.name.replace(".ttf", ""), file },
-      ]);
+      const name = file.name.replace(".ttf", "").trim().replace(/\s+/g, "-"); // sanitize name
+      const fontUrl = URL.createObjectURL(file);
+
+      // Inject @font-face into a dynamic <style> tag
+      const style = document.createElement("style");
+      style.innerHTML = `
+        @font-face {
+          font-family: '${name}';
+          src: url('${fontUrl}');
+        }
+      `;
+      document.head.appendChild(style);
+
+      setFonts((prev) => [...prev, { name, file, fontUrl }]);
     } else {
       alert("Only TTF files are allowed.");
     }
@@ -27,7 +37,7 @@ const FontUploader = ({ setFonts }) => {
       />
       <label htmlFor="font-upload" style={{ cursor: "pointer" }}>
         <div>
-          <IoCloudUploadOutline className="fs-2" />
+          <i className="bi bi-upload fs-2"></i>
           <br />
           <strong>Click to upload</strong> or drag and drop
           <br />
