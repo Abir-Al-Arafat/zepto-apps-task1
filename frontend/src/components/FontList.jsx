@@ -1,11 +1,7 @@
 import React from "react";
-import useFonts from "../hooks/useFonts";
 
-const FontList = () => {
-  const { fonts, deleteFont, loading, error } = useFonts();
-
+const FontList = ({ fonts, loading, error, deleteFont }) => {
   const handleDelete = (id) => {
-    console.log("id", id);
     if (window.confirm("Delete this font?")) {
       deleteFont(id);
     }
@@ -30,7 +26,7 @@ const FontList = () => {
           </thead>
           <tbody>
             {fonts.map((font, idx) => (
-              <tr key={idx}>
+              <tr key={font.id}>
                 <td>{font.name}</td>
                 <td
                   style={{
@@ -41,7 +37,6 @@ const FontList = () => {
                 >
                   Example Style
                 </td>
-
                 <td>
                   <button
                     className="btn btn-sm btn-danger"

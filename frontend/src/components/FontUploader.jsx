@@ -3,8 +3,8 @@ import { IoCloudUploadOutline } from "react-icons/io5";
 
 import useFonts from "../hooks/useFonts";
 
-const FontUploader = () => {
-  const { uploadFont, loading, error } = useFonts();
+const FontUploader = ({ uploadFont, loading, error }) => {
+  // const { uploadFont, loading, error } = useFonts();
 
   const handleUpload = (e) => {
     const file = e.target.files[0];
@@ -29,8 +29,6 @@ const FontUploader = () => {
       />
       <label htmlFor="font-upload" style={{ cursor: "pointer" }}>
         <div>
-          <IoCloudUploadOutline className="fs-2" />
-          <br />
           <strong>Click to upload</strong> or drag and drop
           <br />
           <small>Only TTF File Allowed</small>
