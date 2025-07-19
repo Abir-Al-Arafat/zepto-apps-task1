@@ -1,61 +1,23 @@
 {
   "fonts": [
     {
-      "name": "Roboto_Condensed-Black.ttf",
-      "path": "/uploads/Roboto_Condensed-Black.ttf"
-    },
-    {
-      "name": "Roboto_Condensed-BlackItalic.ttf",
-      "path": "/uploads/Roboto_Condensed-BlackItalic.ttf"
-    },
-    {
-      "name": "Roboto_Condensed-Bold.ttf",
-      "path": "/uploads/Roboto_Condensed-Bold.ttf"
-    },
-    {
-      "id": "762ff1b2-27a3-4a1f-aea0-a77a63c3f066",
-      "name": "CableDingbats.ttf",
-      "path": "/uploads/CableDingbats.ttf"
-    },
-    {
-      "id": "112d552b-b998-4850-a9be-ee21719ffa4a",
+      "id": "28b6fbbc-862e-4bd3-ada1-2aa94d654c52",
       "name": "BBC TV Channel Logos.ttf",
       "path": "/uploads/BBC TV Channel Logos.ttf"
     }
   ],
   "groups": [
     {
-      "name": "Updated-22",
+      "id": "23937697-e1bb-4fa3-afdf-7d7b48ab371f",
+      "name": "new group 1",
       "fonts": [
-        "Roboto_Condensed-BlackItalic.ttf",
-        "Roboto_Condensed-Bold.ttf"
+        "CableDingbats.ttf",
+        "BBC TV Channel Logos.ttf"
       ]
     },
     {
-      "name": "Group-New",
-      "fonts": [
-        "Roboto_Condensed-Bold.ttf",
-        "Roboto_Condensed-Black.ttf"
-      ]
-    },
-    {
-      "name": "Group-11",
-      "fonts": [
-        "Roboto_Condensed-Black.ttf",
-        "Roboto_Condensed-Bold.ttf",
-        "Roboto_Condensed-BlackItalic.ttf"
-      ]
-    },
-    {
-      "name": "G-Up",
-      "fonts": [
-        "Roboto_Condensed-Bold.ttf",
-        "Roboto_Condensed-BlackItalic.ttf"
-      ]
-    },
-    {
-      "id": "ad512ee6-56ff-4283-a6ff-763a7f21507f",
-      "name": "new group",
+      "id": "afac2860-d513-44d2-b170-d08479d19f42",
+      "name": "new group 4",
       "fonts": [
         "CableDingbats.ttf",
         "BBC TV Channel Logos.ttf"
