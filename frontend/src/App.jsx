@@ -4,13 +4,15 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 
 import FontUploader from "./components/FontUploader";
+import FontList from "./components/FontList";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [fonts, setFonts] = useState([]);
 
   return (
     <>
       <FontUploader />
+      <FontList fonts={fonts} />
     </>
   );
 }
