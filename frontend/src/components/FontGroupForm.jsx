@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
-import useFontGroups from "../hooks/useFontGroups";
 
-const FontGroupForm = ({ fonts, editGroup, setEditGroup }) => {
+const FontGroupForm = ({
+  fonts,
+  editGroup,
+  setEditGroup,
+  createGroup,
+  updateGroup,
+  groupLoading,
+  groupError,
+  refetchGroups,
+}) => {
   const [groupTitle, setGroupTitle] = useState("");
   const [rows, setRows] = useState([{ fontName: "" }]);
-  const { createGroup, updateGroup, loading, error } = useFontGroups();
 
-  // Load edit data into form
   useEffect(() => {
     if (editGroup) {
       setGroupTitle(editGroup.name);
@@ -17,29 +23,29 @@ const FontGroupForm = ({ fonts, editGroup, setEditGroup }) => {
   const handleAddRow = () => setRows([...rows, { fontName: "" }]);
   const handleRemoveRow = (index) =>
     setRows(rows.filter((_, i) => i !== index));
-
   const handleChange = (index, value) => {
     const updatedRows = [...rows];
     updatedRows[index].fontName = value;
     setRows(updatedRows);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const selectedFonts = rows.map((r) => r.fontName).filter((name) => name);
     if (selectedFonts.length < 2) return alert("Select at least 2 fonts.");
     if (!groupTitle.trim()) return alert("Group name required");
 
     if (editGroup) {
-      updateGroup({
+      await updateGroup({
         groupId: editGroup.id,
         name: groupTitle.trim(),
         fonts: selectedFonts,
       });
-      setEditGroup(null); // exit edit mode
+      setEditGroup(null);
     } else {
-      createGroup({ name: groupTitle.trim(), fonts: selectedFonts });
+      await createGroup({ name: groupTitle.trim(), fonts: selectedFonts });
     }
 
+    await refetchGroups(); // 🟢 Refresh group list after action
     setGroupTitle("");
     setRows([{ fontName: "" }]);
   };
@@ -97,7 +103,7 @@ const FontGroupForm = ({ fonts, editGroup, setEditGroup }) => {
       <button
         className="btn btn-success me-2"
         onClick={handleSubmit}
-        disabled={loading}
+        disabled={groupLoading}
       >
         {editGroup ? "Update Group" : "Create Group"}
       </button>
@@ -111,7 +117,7 @@ const FontGroupForm = ({ fonts, editGroup, setEditGroup }) => {
         </button>
       )}
 
-      {error && <p className="text-danger mt-2">{error}</p>}
+      {groupError && <p className="text-danger mt-2">{groupError}</p>}
     </div>
   );
 };

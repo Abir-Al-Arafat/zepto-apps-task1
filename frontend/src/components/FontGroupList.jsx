@@ -1,15 +1,19 @@
 import React from "react";
-import useFontGroups from "../hooks/useFontGroups";
 
-const FontGroupList = ({ setEditGroup }) => {
-  const { groups, deleteGroup, loading, error } = useFontGroups();
-
+const FontGroupList = ({
+  groups = [],
+  deleteGroup,
+  setEditGroup,
+  groupLoading,
+  groupError,
+}) => {
+  console.log("groups", groups);
   return (
     <div className="mt-5">
       <h5>All Font Groups</h5>
 
-      {loading && <p className="text-info">Loading...</p>}
-      {error && <p className="text-danger">{error}</p>}
+      {groupLoading && <p className="text-info">Loading...</p>}
+      {groupError && <p className="text-danger">{groupError}</p>}
 
       {groups.length === 0 ? (
         <p>No groups yet.</p>

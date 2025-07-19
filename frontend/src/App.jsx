@@ -4,6 +4,7 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 
 import useFonts from "./hooks/useFonts";
+import useFontGroups from "./hooks/useFontGroups";
 
 import FontUploader from "./components/FontUploader";
 import FontList from "./components/FontList";
@@ -13,6 +14,16 @@ import FontGroupList from "./components/FontGroupList";
 function App() {
   const { fonts, loading, error, uploadFont, deleteFont, refetchFonts } =
     useFonts();
+  const {
+    groups,
+    loading: groupLoading,
+    error: groupError,
+    createGroup,
+    deleteGroup,
+    updateGroup,
+    deleteFontFromGroup,
+    refetchGroups,
+  } = useFontGroups();
   // state for FontGroupForm
   const [editGroup, setEditGroup] = useState(null);
 
@@ -33,8 +44,19 @@ function App() {
           fonts={fonts}
           editGroup={editGroup}
           setEditGroup={setEditGroup}
+          createGroup={createGroup}
+          updateGroup={updateGroup}
+          groupLoading={groupLoading}
+          groupError={groupError}
+          refetchGroups={refetchGroups}
         />
-        <FontGroupList setEditGroup={setEditGroup} />
+        <FontGroupList
+          groups={groups}
+          deleteGroup={deleteGroup}
+          setEditGroup={setEditGroup}
+          groupLoading={groupLoading}
+          groupError={groupError}
+        />
       </div>
     </>
   );
