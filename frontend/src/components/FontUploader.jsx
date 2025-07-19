@@ -1,27 +1,18 @@
 import React from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
 
-const FontUploader = ({ setFonts }) => {
+import useFonts from "../hooks/useFonts";
+
+const FontUploader = () => {
+  const { uploadFont, loading, error } = useFonts();
+
   const handleUpload = (e) => {
     const file = e.target.files[0];
-    if (file && file.name.endsWith(".ttf")) {
-      const name = file.name.replace(".ttf", "").trim().replace(/\s+/g, "-"); // sanitize name
-      const fontUrl = URL.createObjectURL(file);
-
-      // Inject @font-face into a dynamic <style> tag
-      const style = document.createElement("style");
-      style.innerHTML = `
-        @font-face {
-          font-family: '${name}';
-          src: url('${fontUrl}');
-        }
-      `;
-      document.head.appendChild(style);
-
-      setFonts((prev) => [...prev, { name, file, fontUrl }]);
-    } else {
-      alert("Only TTF files are allowed.");
+    if (!file || !file.name.endsWith(".ttf")) {
+      alert("Only .ttf files are allowed.");
+      return;
     }
+    uploadFont(file);
   };
 
   return (
@@ -45,6 +36,9 @@ const FontUploader = ({ setFonts }) => {
           <small>Only TTF File Allowed</small>
         </div>
       </label>
+
+      {loading && <p className="text-info mt-2">Uploading...</p>}
+      {error && <p className="text-danger mt-2">{error}</p>}
     </div>
   );
 };
