@@ -1,9 +1,9 @@
 import React from "react";
 
 const FontList = ({ fonts, loading, error, deleteFont }) => {
-  const handleDelete = (id) => {
+  const handleDelete = (id, name) => {
     if (window.confirm("Delete this font?")) {
-      deleteFont(id);
+      deleteFont(id, name);
     }
   };
 
@@ -40,7 +40,7 @@ const FontList = ({ fonts, loading, error, deleteFont }) => {
                 <td>
                   <button
                     className="btn btn-sm btn-danger"
-                    onClick={() => handleDelete(font.id)}
+                    onClick={() => handleDelete(font.id, font.name)}
                   >
                     Delete
                   </button>
