@@ -53,6 +53,25 @@ const useFontGroups = () => {
     }
   };
 
+  const findFontInGroups = async (fontName) => {
+    try {
+      const formData = new FormData();
+      formData.append("fontName", fontName);
+
+      const res = await fetch(`${API_URL}/find/font`, {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await res.json();
+      if (!res.ok) return [];
+      return result.data || [];
+    } catch (err) {
+      console.error("findFontInGroups error:", err);
+      return [];
+    }
+  };
+
   // Delete entire group
   const deleteGroup = async (groupId) => {
     try {
@@ -73,13 +92,15 @@ const useFontGroups = () => {
   };
 
   // Remove font from group
-  const deleteFontFromGroup = async ({ groupId, fontName }) => {
+  const deleteFontFromGroup = async ({ fontName }) => {
     try {
       setLoading(true);
       setError("");
       const formData = new FormData();
-      formData.append("groupId", groupId);
+      //   formData.append("groupId", groupId);
       formData.append("fontName", fontName);
+
+      console.log("deleteFontFromGroup formData", formData);
 
       const res = await fetch(`${API_URL}/delete/font`, {
         method: "DELETE",
@@ -87,6 +108,7 @@ const useFontGroups = () => {
       });
 
       const json = await res.json();
+      console.log("deleteFontFromGroup", json);
       if (json.success) {
         await fetchGroups();
       } else {
@@ -136,6 +158,7 @@ const useFontGroups = () => {
     error,
     createGroup,
     deleteGroup,
+    findFontInGroups,
     deleteFontFromGroup,
     updateGroup,
     refetchGroups: fetchGroups,
