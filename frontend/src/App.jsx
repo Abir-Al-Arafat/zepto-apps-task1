@@ -21,11 +21,28 @@ function App() {
     createGroup,
     deleteGroup,
     updateGroup,
+    findFontInGroups,
     deleteFontFromGroup,
     refetchGroups,
   } = useFontGroups();
   // state for FontGroupForm
   const [editGroup, setEditGroup] = useState(null);
+
+  const handleDeleteFont = async (id, fontName) => {
+    try {
+      const groups = await findFontInGroups(fontName);
+      console.log("groups findFontInGroups(fontName)", groups);
+      if (groups.length) {
+        await deleteFontFromGroup({ fontName });
+        await refetchGroups();
+      }
+
+      await deleteFont(id);
+      await refetchFonts();
+    } catch (err) {
+      console.error("Error deleting font and cleaning up groups:", err);
+    }
+  };
 
   return (
     <>
@@ -35,7 +52,7 @@ function App() {
           fonts={fonts}
           loading={loading}
           error={error}
-          deleteFont={deleteFont}
+          deleteFont={handleDeleteFont}
         />
 
         <hr />
