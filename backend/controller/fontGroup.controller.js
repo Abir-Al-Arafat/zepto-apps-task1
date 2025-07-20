@@ -182,17 +182,47 @@ const updateGroup = (req, res) => {
   }
 };
 
+const findFontInGroup = (req, res) => {
+  try {
+    const dbContent = fs.readFileSync(DATABASE_FILE, "utf-8") || "{}";
+    const db = JSON.parse(dbContent);
+    const { fontName } = req.body;
+    if (!fontName) {
+      return res
+        .status(HTTP_STATUS.BAD_REQUEST)
+        .send(failure("Font name is required"));
+    }
+    const groups = db.groups
+      .filter((group) => group.fonts.includes(fontName))
+      .map((group) => group.name);
+    if (groups.length > 0) {
+      return res
+        .status(HTTP_STATUS.OK)
+        .send(success("Font found in groups", groups));
+    }
+    return res
+      .status(HTTP_STATUS.NOT_FOUND)
+      .send(failure("Font not found in any group"));
+  } catch (err) {
+    return res
+      .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
+      .send(failure("Failed to find font in groups", err.message));
+  }
+};
+
 const deleteFontFromGroup = (req, res) => {
   try {
     const dbContent = fs.readFileSync(DATABASE_FILE, "utf-8") || "{}";
     const db = JSON.parse(dbContent);
-    const fontName = req.body.fontName;
+    const { fontName } = req.body;
 
     if (!fontName) {
       return res
         .status(HTTP_STATUS.BAD_REQUEST)
         .send(failure("Font name is required"));
     }
+    console.log("db", req.body);
+    console.log("fontName", fontName);
 
     let groupsToRemove = [];
 
@@ -226,5 +256,6 @@ module.exports = {
   updateGroup,
   getGroups,
   deleteGroup,
+  findFontInGroup,
   deleteFontFromGroup,
 };
