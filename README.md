@@ -34,7 +34,7 @@ A full-stack web application built using the **MERN stack** (MongoDB, Express.js
 ### 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/zepto-apps-task1.git
+git clone https://github.com/Abir-Al-Arafat/zepto-apps-task1.git
 
 ```
 
