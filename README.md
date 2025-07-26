@@ -20,7 +20,6 @@ A full-stack web application built using the **MERN stack** (MongoDB, Express.js
 - **React.js**
 - **Bootstrap 5**
 - **fetch** along with custom hooks for HTTP requests
-- **React Router DOM** for navigation
 
 ### Backend:
 - **Node.js**
