@@ -1,4 +1,4 @@
-# 📦 MERN Stack Project
+# 📦 Font Group MERN Stack Project
 
 A full-stack web application built using the **MERN stack** (MongoDB, Express.js, React.js, Node.js) with **Bootstrap** for UI styling. This project includes both the frontend and backend implementations.
 
@@ -19,7 +19,7 @@ A full-stack web application built using the **MERN stack** (MongoDB, Express.js
 ### Frontend:
 - **React.js**
 - **Bootstrap 5**
-- **fetch** for HTTP requests
+- **fetch** along with custom hooks for HTTP requests
 - **React Router DOM** for navigation
 
 ### Backend:
