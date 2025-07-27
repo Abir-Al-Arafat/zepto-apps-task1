@@ -2,6 +2,9 @@
 
 A full-stack web application built using the Express.js, Node.js for backend and React.js with **Bootstrap** for UI styling. This project includes both the frontend and backend implementations.
 
+## Objective:
+A single-page application (without page reloads) that allows users to upload fonts (TTF only), preview them, create font groups (with validation for a minimum of 2 fonts per group), and manage those groups through edit/delete functionalities.
+
 ---
 
 ## 🔧 Features
