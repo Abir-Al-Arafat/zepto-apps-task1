@@ -1,27 +1,4 @@
 {
-  "fonts": [
-    {
-      "id": "28b6fbbc-862e-4bd3-ada1-2aa94d654c52",
-      "name": "BBC TV Channel Logos.ttf",
-      "path": "/uploads/BBC TV Channel Logos.ttf"
-    }
-  ],
-  "groups": [
-    {
-      "id": "23937697-e1bb-4fa3-afdf-7d7b48ab371f",
-      "name": "new group 1",
-      "fonts": [
-        "CableDingbats.ttf",
-        "BBC TV Channel Logos.ttf"
-      ]
-    },
-    {
-      "id": "afac2860-d513-44d2-b170-d08479d19f42",
-      "name": "new group 4",
-      "fonts": [
-        "CableDingbats.ttf",
-        "BBC TV Channel Logos.ttf"
-      ]
-    }
-  ]
+  "fonts": [],
+  "groups": []
 }
