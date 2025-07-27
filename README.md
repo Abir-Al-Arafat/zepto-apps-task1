@@ -1,6 +1,6 @@
-# 📦 Font Group MERN Stack Project
+# 📦 Font Group Management System
 
-A full-stack web application built using the **MERN stack** (MongoDB, Express.js, React.js, Node.js) with **Bootstrap** for UI styling. This project includes both the frontend and backend implementations.
+A full-stack web application built using the Express.js, Node.js for backend and React.js with **Bootstrap** for UI styling. This project includes both the frontend and backend implementations.
 
 ---
 
