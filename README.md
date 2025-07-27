@@ -24,7 +24,7 @@ A full-stack web application built using the **MERN stack** (MongoDB, Express.js
 ### Backend:
 - **Node.js**
 - **Express.js**
-- **MongoDB** with **Mongoose**
+- **JSON** file for **mock database**
 - **dotenv** for environment configuration
 
 ---
